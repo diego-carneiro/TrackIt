@@ -3,9 +3,10 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Login_Page from "./Login";
 import Signup_Page from "./Signup";
 import Header from "./Header";
-import Main_Page from "./Menu";
-import Footer from "./Footer";
 import Habits from "./Habits";
+import Footer from "./Footer";
+import CurrentDay from "./CurrentDay";
+import History from "./History";
 
 export default function App() {
 
@@ -18,14 +19,19 @@ export default function App() {
                 <Route path="/cadastro" exact>
                     <Signup_Page />
                 </Route>
-                <Route path="/hoje" exact>
-                    <Header></Header>
-                    <Main_Page />
-                    <Footer></Footer>
-                </Route>
                 <Route path="/habitos" exact>
                     <Header></Header>
-                    <Habits/>
+                        <Habits />
+                    <Footer></Footer>
+                </Route>
+                <Route path="/hoje" exact>
+                    <Header></Header>
+                        <CurrentDay />
+                    <Footer></Footer>
+                </Route>
+                <Route path="/historico" exact>
+                    <Header></Header>
+                        
                     <Footer></Footer>
                 </Route>
             </Switch>

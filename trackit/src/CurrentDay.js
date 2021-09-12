@@ -1,15 +1,18 @@
 import styled from 'styled-components';
 
-export default function Main_Page() {
-    return (
+export default function CurrentDay(){
+    
+    const dayjs = require("dayjs")
+    
+    return(
         <Container>
-            <Myhabits>
-                <p>Meus Hábitos</p>
-                <Button>
-                    <p>+</p>
-                </Button>
-            </Myhabits>
-            <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>   
+            <BodyTitle>
+                <h1>{dayjs().format('dddd')}, {dayjs().format('DD/MM')}</h1>
+                <h2>Nenhum hábito concluído ainda</h2>
+            </BodyTitle>
+            <TaskBox>
+
+            </TaskBox>
         </Container>
     );
 }
@@ -28,29 +31,29 @@ const Container = styled.div`
         margin-left: 18px;
     }
 `;
-const Myhabits = styled.div`
+const BodyTitle = styled.div`
    display: flex;
    flex-wrap: wrap;
    justify-content: space-between;
    align-items: center;
    margin-bottom: 28px;
-   p{
+   h1{
         font-size: 23px;
         color: #126BA5;
         margin-left: 18px;
         margin-top: 28px;
     }
-`;
-const Button = styled.div`
-    width: 40px;
-    height: 35px;
-    background-color: #52B6FF;
-    border-radius: 4.63636px;
-    margin-right: 18px;
-    margin-top: 28px;
-    p{
-        font-size: 27px;
-        color: #FFFFFF;
-        margin: 2px 12px 0px 12px;
+    h2{
+        font-size: 18px;
+        color: #BABABA;
+        margin-left: 18px;
+        margin-top: 5px;
     }
-;`
+`;
+const TaskBox = styled.div`
+    width: 340px;
+    height: 94px;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    margin: 0 auto;
+`;

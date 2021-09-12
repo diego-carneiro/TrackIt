@@ -28,9 +28,7 @@ export default function Login_Page() {
             history.push('/hoje')
             console.log(response)
         });
-
     }
-
     return (
 
         <Container>

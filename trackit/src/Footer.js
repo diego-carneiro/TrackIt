@@ -1,15 +1,16 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useHistory } from "react-router";
 
 export default function Footer() {
 
+    let history = useHistory();
+
     return (
         <BottomBar>
-            <Link to="/habitos">
-                <p>Hábitos</p>
-            </Link>
+            <Button onClick={() => history.push("/habitos")}>Hábitos</Button>
             <Icon></Icon>
-                <p>Histórico</p>   
+            <Button onClick={() => history.push("/habitos")}>Histórico</Button>   
         </BottomBar>
     );
 }
@@ -24,13 +25,13 @@ const BottomBar = styled.div`
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
-    *{
-        font-family: 'Lexend Deca', sans-serif;
-    }
-    p{
-        color:#52B6FF;
-        
-    }
+`;
+const Button = styled.button`
+    font-size: 18px;
+    font-family: 'Lexend Deca', sans-serif;
+    color: #52B6FF;
+    border: none;
+    background: none;
 `;
 const Icon = styled.div`
     width: 50px;

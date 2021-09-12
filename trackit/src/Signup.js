@@ -29,6 +29,7 @@ export default function Signup_Page() {
             history.push('/')
             console.log(response)
         });
+        promise.catch((error) => alert(error))
     }
     
     return (
