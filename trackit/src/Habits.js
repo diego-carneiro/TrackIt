@@ -1,8 +1,11 @@
+import React from 'react';
+import { ReactDOM } from 'react';
 import styled, { ThemeConsumer } from 'styled-components';
-import { useState } from "react";
+import axios from 'axios';
+import { useState, useEffect } from "react";
 
 
-export default function Habits() {
+export default function Habits({ token }) {
 
     const [isHidden, setIsHidden] = useState(true)
 
@@ -13,12 +16,25 @@ export default function Habits() {
         setIsHidden(true)
     }
 
-    function requestHabit() {
-        const HabitRequest = {
+    function RequestHabit() {
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+        const body = {
             name: infos.name,
             days: selectedDays,
         }
-        console.log(HabitRequest)
+        console.log(body)
+
+        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits`, body, config)
+        promise.then((response) => {
+            console.log(response)
+        });
+        promise.catch((error) => alert(error))
+
     }
 
     const [selectedDays, setSelectedDays] = useState([])
@@ -103,7 +119,7 @@ export default function Habits() {
                     </DayButton>
                 )}
                 <CancelButton onClick={cancel}>Cancelar</CancelButton>
-                <SaveButton onClick={requestHabit}>Salvar</SaveButton>
+                <SaveButton onClick={RequestHabit}>Salvar</SaveButton>
             </HabitBox>
             <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
         </Container>

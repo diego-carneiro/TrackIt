@@ -1,14 +1,40 @@
+import React from 'react';
+import { ReactDOM } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
-export default function CurrentDay(){
+export default function CurrentDay({ token }){
     
     const dayjs = require("dayjs")
+    const [habits, setHabits] = useState([])
+
+    useEffect(() => {
+        
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+        console.log(config)
+
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config)
+        promise.then((response) => {
+            setHabits([response.data])
+            console.log(response.data)
+        });
+        promise.catch((error) => alert(error))
+    }, []);
     
     return(
         <Container>
             <BodyTitle>
                 <h1>{dayjs().format('dddd')}, {dayjs().format('DD/MM')}</h1>
                 <h2>Nenhum hábito concluído ainda</h2>
+                {habits.map((data) =>
+                <p>{data.name}</p>
+                
+                )}
             </BodyTitle>
             <TaskBox>
 

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useHistory } from 'react-router-dom';
 
-export default function Login_Page() {
+export default function Login_Page( {setToken} ) {
 
     const initialValue = {
         email: '',
@@ -11,6 +11,7 @@ export default function Login_Page() {
     }
 
     const [infos, setInfos] = useState(initialValue);
+
     const history = useHistory();
 
     function onChange(ev) {
@@ -25,9 +26,11 @@ export default function Login_Page() {
 
         const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login`, infos);
         promise.then((response) => {
+
+            setToken(response.data.token)
             history.push('/hoje')
-            console.log(response)
         });
+        promise.catch((error) => alert(error))
     }
     return (
 
