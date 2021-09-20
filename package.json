@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "dayjs": "^1.10.7",
-    "react-circular-progressbar": "^2.0.4",
-    "react-loader-spinner": "^4.0.0"
-  }
-}
