@@ -1,6 +1,6 @@
 import React from "react";
-import { useState } from "react";
 import styled from "styled-components";
+import { useState } from "react";
 
 import Header from "../components/Header";
 import NewHabit from "../components/NewHabit";
@@ -40,6 +40,9 @@ const Container = styled.div`
     height: 100vh;
     background-color: #E5E5E5;
     padding: 20px 18px 20px 18px;
+    display: flex;
+    flex-direction: column;
+
 `
 const TittleSection = styled.div`
     display: flex;
