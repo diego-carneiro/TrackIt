@@ -3,6 +3,7 @@ import React from "react";
 import Login from "./views/Login";
 import Signup from "./views/Signup";
 import Habits from "./views/Habits";
+import History from "./views/History";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyle from "./styles/GlobalStyle";
@@ -24,6 +25,7 @@ export default function App() {
                 <Route path="/" element={<Login setInfo={setInfo}/>} />
                 <Route path="/cadastro" element={<Signup /> } />
                 <Route path="/habitos" element={<Habits/> } />
+                <Route path="/historico" element={<History/> } />
             </Routes>
         </BrowserRouter>
 

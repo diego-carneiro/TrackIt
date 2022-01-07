@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import DayIcon from "./DayIcon";
 
-export default function NewHabit({ isHidden }) {
+export default function NewHabit({ isHidden, setIsHidden }) {
 
     const initialValue = {
         name: "",
@@ -23,7 +23,7 @@ export default function NewHabit({ isHidden }) {
     return (
 
         <HabitBox display={isHidden} >
-                <Input placeholder="  nome do hábito" type="text" name="email" onChange={onChange}></Input>
+                <Input placeholder="  Nome do hábito" type="text" name="email" onChange={onChange}></Input>
                 <DaySection>
                     {allDays.map((info) => (
                         <DayIcon>
@@ -31,12 +31,14 @@ export default function NewHabit({ isHidden }) {
                         </DayIcon>
                     ))}
                 </DaySection>
-            <CancelButton>
+            <CancelButton onClick={() => {
+                setIsHidden(true);
+            }}>
                 <p>Cancelar</p>
             </CancelButton>
-            <CancelButton>
+            <SaveButton>
                 <p>Salvar</p>
-            </CancelButton>
+            </SaveButton>
         </HabitBox>
     );
 }
@@ -70,12 +72,26 @@ const DaySection = styled.div`
 const CancelButton = styled.div`
     width: 84px;
     height: 35px;
-    background-color: green;
+    background-color: #FFFFFF;
     border-radius: 4.63636px;
     display: flex;
-  
+    justify-content: center;
+    align-items: center;
     p{
         font-size: 16px;
         color:#52B6FF;
+    }
+`
+const SaveButton = styled.div`
+    width: 84px;
+    height: 35px;
+    background-color: #52B6FF;
+    border-radius: 4.63636px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    p{
+        font-size: 16px;
+        color: #FFFFFF;
     }
 `

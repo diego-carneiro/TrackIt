@@ -5,6 +5,7 @@ import { useState } from "react";
 import Header from "../components/Header";
 import NewHabit from "../components/NewHabit";
 import { AuthContext } from "../providers/auth";
+import Footer from "../components/Footer";
 
 export default function Habits() {
 
@@ -13,7 +14,6 @@ export default function Habits() {
     const [isHidden, setIsHidden] = useState(true);
 
     return (
-
         <>
             <Header />
             <Container>
@@ -25,12 +25,12 @@ export default function Habits() {
                         <p>+</p>
                     </PlusButton>
                 </TittleSection>
-                <NewHabit isHidden={isHidden} />
+                <NewHabit isHidden={isHidden} setIsHidden={setIsHidden} />
                 <InteractionBox>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 </InteractionBox>
             </Container>
-
+            <Footer />
         </>
     );
 }
@@ -42,7 +42,8 @@ const Container = styled.div`
     padding: 20px 18px 20px 18px;
     display: flex;
     flex-direction: column;
-
+    margin-top: 70px;
+    margin-bottom: 70px;
 `
 const TittleSection = styled.div`
     display: flex;
@@ -67,11 +68,6 @@ const PlusButton = styled.div`
    p{
        color: #FFFFFF;
    }
-`
-const Lala = styled.div`
-    width: 51px;
-    height: 51px;
-    background-color: green;
 `
 const InteractionBox = styled.div`
     margin-top: 30px;
