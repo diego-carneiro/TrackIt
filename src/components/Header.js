@@ -1,17 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-
-import { AuthContext } from "../providers/auth";
+import { useState } from "react";
 
 export default function Header () {
 
-    const { user, setUser } = React.useContext(AuthContext);
+    const [image, setImage] = useState(() => {
 
+        const saved = localStorage.getItem("userImg");
+
+        return saved;
+    });
+ 
     return (
 
         <TopBar>
             <Icon src="/assets/img/TrackIt.png"/>
-            <UserIcon src={user.image} />
+            <UserIcon src={image} />
         </TopBar>
 
     );

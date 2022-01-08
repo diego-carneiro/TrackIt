@@ -8,32 +8,32 @@ import MenuButton from "./MenuButton";
 
 export default function Footer() {
 
-    const percentage = 90;
+    const percentage = 20;
 
     return (
         <BotBar>
             <Link to="/habitos">
-                <MenuButton>
-                </MenuButton>
+                <MenuButton>Hábitos</MenuButton>
             </Link>
-            <CircularContainer>
-                <CircularProgressbar
-                    value={percentage}
-                    text={"Hoje"}
-                    background
-                    backgroundPadding={6}
-                    styles={buildStyles({
-                        backgroundColor: "#3e98c7",
-                        textColor: "#fff",
-                        pathColor: "#fff",
-                        trailColor: "transparent"
-                    })}
-                />
-            </CircularContainer>
+            <Link to="/hoje">
+                <CircularContainer>
+                    <CircularProgressbar
+                        value={percentage}
+                        text={"Hoje"}
+                        background
+                        backgroundPadding={6}
+                        styles={buildStyles({
+                            backgroundColor: "#3e98c7",
+                            textColor: "#fff",
+                            pathColor: "#fff",
+                            trailColor: "transparent"
+                        })}
+                    />
+                </CircularContainer>
+            </Link>
             <Link to="/historico">
-                <MenuButton>
-                </MenuButton>
-            </Link>        
+                <MenuButton>Histórico</MenuButton>
+            </Link>
         </BotBar>
     );
 }

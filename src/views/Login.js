@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import Logo from "../components/Logo";
+import Loading from "../components/Loading";
 
-
-export default function LoginPage( {setInfo} ) {
+export default function LoginPage({ setInfo }) {
 
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -32,42 +32,48 @@ export default function LoginPage( {setInfo} ) {
         promise.then(response => {
 
             navigate("/habitos");
-            setIsLoading(true);
+            setIsLoading(false);
             setInfo(response.data);
+            storage("userImg", response.data.image);
         });
         promise.catch(error => alert(error))
     }
 
+    const storage = (key, value) => {
 
-    if(isLoading === true){
-        
+        localStorage.setItem(key, value);
+    }
+
+    if (isLoading === true) {
+
         return (
             <Container>
-            <Logo />
-            <Form onSubmit={onSubmit}>
-                <Input placeholder="  email" type="text" name="email" onChange={onChange}>
-                </Input>
-                <Input placeholder="  senha" type="password" name="password" onChange={onChange}>
-                </Input>
-                <Button type="submit">lol</Button>
-            </Form>
-            <Link to="/cadastro">
-                <p>Não tem uma conta? Cadastre-se!</p>
-            </Link>
-        </Container>
+                <Logo />
+                <Form onSubmit={onSubmit}>
+                    <Input placeholder="  email" type="text" name="email" onChange={onChange} disabled={isLoading} color={isLoading}>
+                    </Input>
+                    <Input placeholder="  senha" type="password" name="password" onChange={onChange} disabled={isLoading} color={isLoading}>
+                    </Input>
+                    <Button type="submit">
+                        <Loading />
+                    </Button>
+                </Form>
+                <Link to="/cadastro">
+                    <p>Não tem uma conta? Cadastre-se!</p>
+                </Link>
+            </Container>
         );
     }
 
     return (
-
         <Container>
             <Logo />
             <Form onSubmit={onSubmit}>
-                <Input placeholder="  email" type="text" name="email" onChange={onChange}>
+                <Input placeholder="  email" type="text" name="email" onChange={onChange} color={isLoading}>
                 </Input>
-                <Input placeholder="  senha" type="password" name="password" onChange={onChange}>
+                <Input placeholder="  senha" type="password" name="password" onChange={onChange} color={isLoading}>
                 </Input>
-                <Button type="submit">Entrar</Button>
+                <Button type="submit" color={isLoading} onClick={() => {setIsLoading(true)}}>Entrar</Button>
             </Form>
             <Link to="/cadastro">
                 <p>Não tem uma conta? Cadastre-se!</p>
@@ -110,13 +116,22 @@ const Input = styled.input`
     border-radius: 5px;
     font-size: 20px;
     margin-bottom: 6px;
+    background-color: ${props => props.color ? "#F2F2F2" : "#FFFFFF"};
+
+    &:input:focus {
+        background-color: #FFFFFF;
+    }
 `;
 const Button = styled.button`
     width: 303px;
     height: 45px;
     background: #52B6FF;
+    opacity: ${props => props.color ? "0.7" : "1"};
     border: none;
     border-radius: 4.63636px;
     font-size: 21px;
     color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;

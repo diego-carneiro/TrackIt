@@ -1,20 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-export default function MenuButton() {
+export default function MenuButton(props) {
 
     return(
 
-        <Lala>
-            <p>Hábitos</p>
-        </Lala>
+        <Button>
+            <p>{props.children}</p>
+        </Button>
 
     );
 
 }
 
 // ::::::::::Styled-Components::::::::::
-const Lala = styled.div`
+const Button = styled.div`
 
     p{
         font-size: 18px;
