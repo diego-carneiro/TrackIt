@@ -13,6 +13,10 @@ export default function Habits() {
 
     const [isHidden, setIsHidden] = useState(true);
 
+    const [habitInfo, setHabitInfo] = useState("");
+
+    console.log(habitInfo, "AQUI");
+
     return (
         <>
             <Header />
@@ -25,7 +29,7 @@ export default function Habits() {
                         <p>+</p>
                     </PlusButton>
                 </TittleSection>
-                <NewHabit isHidden={isHidden} setIsHidden={setIsHidden} />
+                <NewHabit isHidden={isHidden} setIsHidden={setIsHidden} setHabitInfo={setHabitInfo}/>
                 <InteractionBox>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 </InteractionBox>

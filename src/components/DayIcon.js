@@ -8,7 +8,8 @@ export default function DayIcon(props) {
 
     const Toggle = () => {
 
-        isSelected ? setIsSelected(false) : setIsSelected(true);  
+        isSelected ? setIsSelected(false) : setIsSelected(true);
+        isSelected ? props.removeDay(props.id) : props.addDay(props.id);
     }
 
     return(

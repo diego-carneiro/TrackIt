@@ -13,17 +13,17 @@ import { useState } from "react";
 
 export default function App() {
 
+    const [token, setToken] = useState("");
+
     const { user, setUser } = React.useContext(AuthContext);
     
     const [info, setInfo] = useState("");
-
-    setUser(info);
 
     return (
         <BrowserRouter>   
             <GlobalStyle />
             <Routes>
-                <Route path="/" element={<Login setInfo={setInfo}/>} />
+                <Route path="/" element={<Login setInfo={setInfo} setToken={setToken} />} />
                 <Route path="/cadastro" element={<Signup /> } />
                 <Route path="/habitos" element={<Habits/> } />
                 <Route path="/historico" element={<History/> } />

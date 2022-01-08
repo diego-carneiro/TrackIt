@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { useState } from "react";
 
 import DayIcon from "./DayIcon";
+import { useEffect } from "react/cjs/react.development";
 
-export default function NewHabit({ isHidden, setIsHidden }) {
+export default function NewHabit({ isHidden, setIsHidden, setHabitInfo }) {
 
     const initialValue = {
         name: "",
@@ -12,31 +13,98 @@ export default function NewHabit({ isHidden, setIsHidden }) {
 
     const [habitName, setHabitName] = useState(initialValue);
 
-    function onChange(ev) {
-        const { name, value } = ev.target;
+    const allDays = [
+        {
+            id: "7",
+            day: "D",
+        },
+        {
+            id: "1",
+            day: "S",
+        },
+        {
+            id: "2",
+            day: "T",
+        },
+        {
+            id: "3",
+            day: "Q",
+        },
+        {
+            id: "4",
+            day: "Q",
+        },
+        {
+            id: "5",
+            day: "S",
+        },
+        {
+            id: "6",
+            day: "S",
+        },
+    ];
 
-        setHabitName({ ...habitName, [name]: value })
+    const [marked, setMarked] = useState([]);
+
+    function addDay(id) {
+
+        const list = [...marked, id]
+        setMarked(list);
+        setHabitInfo(
+            {
+                name: habitName.name,
+                days: marked,
+            }
+        )
     }
 
-    const allDays = ["D", "S", "T", "Q", "Q", "S", "S"];
+    function removeDay(id) {
+
+        const filtered = marked.filter(index => {
+            if (id === index) {
+                return false;
+            } else {
+                return true;
+            };
+
+        })
+        setMarked(filtered);
+        setHabitInfo(
+            {
+                name: habitName.name,
+                days: marked,
+            }
+        )
+    }
+    console.log(habitName, "nome");
+
+    useEffect(() => {
+
+        setHabitInfo(
+            {
+                name: habitName,
+                days: marked,
+            }
+        );
+    }, [habitName, marked]);
 
     return (
 
         <HabitBox display={isHidden} >
-                <Input placeholder="  Nome do hábito" type="text" name="email" onChange={onChange}></Input>
-                <DaySection>
-                    {allDays.map((info) => (
-                        <DayIcon>
-                            <p>{info}</p>
-                        </DayIcon>
-                    ))}
-                </DaySection>
+            <Input placeholder="  Nome do hábito" type="text" name="name" onChange= {(e) => setHabitName(e.target.value)}></Input>
+            <DaySection>
+                {allDays.map((info) => (
+                    <DayIcon id={info.id} addDay={addDay} removeDay={removeDay}>
+                        <p>{info.day}</p>
+                    </DayIcon>
+                ))}
+            </DaySection>
             <CancelButton onClick={() => {
                 setIsHidden(true);
             }}>
                 <p>Cancelar</p>
             </CancelButton>
-            <SaveButton>
+            <SaveButton >
                 <p>Salvar</p>
             </SaveButton>
         </HabitBox>

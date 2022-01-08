@@ -7,7 +7,7 @@ import axios from "axios";
 import Logo from "../components/Logo";
 import Loading from "../components/Loading";
 
-export default function LoginPage({ setInfo }) {
+export default function LoginPage({ setInfo, setToken }) {
 
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -31,12 +31,17 @@ export default function LoginPage({ setInfo }) {
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", values);
         promise.then(response => {
 
-            navigate("/habitos");
+            navigate("/hoje");
             setIsLoading(false);
             setInfo(response.data);
+            setToken(response.data.token);
             storage("userImg", response.data.image);
         });
-        promise.catch(error => alert(error))
+        promise.catch(error => {
+            
+            setIsLoading(false);
+            alert("E-mail ou senha estão incorretos");
+        });
     }
 
     const storage = (key, value) => {
@@ -73,7 +78,7 @@ export default function LoginPage({ setInfo }) {
                 </Input>
                 <Input placeholder="  senha" type="password" name="password" onChange={onChange} color={isLoading}>
                 </Input>
-                <Button type="submit" color={isLoading} onClick={() => {setIsLoading(true)}}>Entrar</Button>
+                <Button type="submit" color={isLoading} onClick={() => { setIsLoading(true) }}>Entrar</Button>
             </Form>
             <Link to="/cadastro">
                 <p>Não tem uma conta? Cadastre-se!</p>
@@ -117,10 +122,6 @@ const Input = styled.input`
     font-size: 20px;
     margin-bottom: 6px;
     background-color: ${props => props.color ? "#F2F2F2" : "#FFFFFF"};
-
-    &:input:focus {
-        background-color: #FFFFFF;
-    }
 `;
 const Button = styled.button`
     width: 303px;

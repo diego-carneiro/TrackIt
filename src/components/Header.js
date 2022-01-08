@@ -1,16 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
+import { AuthContext } from "../providers/auth";
 
 export default function Header () {
-
+    
+    const saved = localStorage.getItem("userImg");
+    
     const [image, setImage] = useState(() => {
 
         const saved = localStorage.getItem("userImg");
 
         return saved;
     });
- 
+
     return (
 
         <TopBar>
