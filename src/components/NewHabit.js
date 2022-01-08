@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-
-import DayIcon from "./DayIcon";
 import { useEffect } from "react/cjs/react.development";
 
-export default function NewHabit({ isHidden, setIsHidden, setHabitInfo }) {
+import DayIcon from "./DayIcon";
+
+
+export default function NewHabit({ isHidden, setIsHidden, setHabitInfo, setPostTrigger }) {
 
     const initialValue = {
         name: "",
@@ -76,7 +77,6 @@ export default function NewHabit({ isHidden, setIsHidden, setHabitInfo }) {
             }
         )
     }
-    console.log(habitName, "nome");
 
     useEffect(() => {
 
@@ -104,7 +104,10 @@ export default function NewHabit({ isHidden, setIsHidden, setHabitInfo }) {
             }}>
                 <p>Cancelar</p>
             </CancelButton>
-            <SaveButton >
+            <SaveButton onClick={() => {
+                setPostTrigger(true)
+                setIsHidden(true);
+            }}>
                 <p>Salvar</p>
             </SaveButton>
         </HabitBox>

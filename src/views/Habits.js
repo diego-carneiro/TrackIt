@@ -1,21 +1,67 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
+import { useEffect } from "react/cjs/react.development";
+import axios from "axios";
 
 import Header from "../components/Header";
 import NewHabit from "../components/NewHabit";
-import { AuthContext } from "../providers/auth";
+import PostedHabits from "../components/PostedHabits";
 import Footer from "../components/Footer";
+import { AuthContext } from "../providers/auth";
 
-export default function Habits() {
-
-    const { user, setUser } = React.useContext(AuthContext);
+export default function Habits({ token }) {
 
     const [isHidden, setIsHidden] = useState(true);
-
     const [habitInfo, setHabitInfo] = useState("");
+    const [postTrigger, setPostTrigger] = useState(false);
+    const [hideText, setHideText] = useState(false);
+    const [showHabits, setShowHabits] = useState(false);
+    const [info, setInfo] = useState(null);
 
-    console.log(habitInfo, "AQUI");
+    if (postTrigger === true) {
+        postHabit();
+        setPostTrigger(false);
+    }
+
+    useEffect(() => {
+
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+        promise.then(response => {
+            console.log(response);
+            setInfo(response.data);
+            if (info === null) {
+                setShowHabits(false);
+            } else {
+                setShowHabits(true);
+            }
+        });
+        promise.catch(error => {
+            alert(error);
+        });
+    }, []);
+
+    function postHabit() {
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", habitInfo,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+        promise.then(response => {
+            console.log(response);
+        });
+        promise.catch(error => {
+            alert("Erro ao salvar novo hábito");
+        });
+    }
 
     return (
         <>
@@ -29,7 +75,9 @@ export default function Habits() {
                         <p>+</p>
                     </PlusButton>
                 </TittleSection>
-                <NewHabit isHidden={isHidden} setIsHidden={setIsHidden} setHabitInfo={setHabitInfo}/>
+                <NewHabit isHidden={isHidden} setIsHidden={setIsHidden} setHabitInfo={setHabitInfo} setPostTrigger={setPostTrigger}
+                />
+                <PostedHabits token={token} info={info} showHabits={showHabits} />
                 <InteractionBox>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 </InteractionBox>

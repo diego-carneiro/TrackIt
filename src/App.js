@@ -25,7 +25,7 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<Login setInfo={setInfo} setToken={setToken} />} />
                 <Route path="/cadastro" element={<Signup /> } />
-                <Route path="/habitos" element={<Habits/> } />
+                <Route path="/habitos" element={<Habits token={token}/> } />
                 <Route path="/historico" element={<History/> } />
                 <Route path="/hoje" element={<CurrentDay/> } />
             </Routes>
