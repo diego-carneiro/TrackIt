@@ -6,13 +6,19 @@ import axios from "axios";
 
 import Header from "../components/Header";
 import WeekdayDate from "../components/WeekdayDate";
+import CheckBox from "../components/CheckBox"
 import Footer from "../components/Footer";
 
-
-export default function MenuButton({ token }) {
+export default function MenuButton() {
 
     const [info, setInfo] = useState([]);
-    const [isChecked, setIsChecked] = useState(false);
+    const [count, setCount] = useState(0);
+    const [token, setToken] = useState(() => {
+
+        const storedToken = localStorage.getItem("userToken");
+
+        return storedToken;
+    });
 
     useEffect(() => {
 
@@ -23,12 +29,13 @@ export default function MenuButton({ token }) {
                 }
             }
         );
-        promise.then((response) => {
+        promise.then(response => {
             setInfo(response.data);
         });
 
     }, []);
 
+    console.log(count);
 
     return (
         <>
@@ -38,8 +45,8 @@ export default function MenuButton({ token }) {
                 {info.map((items) => (
                     <HabitSection>
                         <p>{items.name}</p>
-                        <CheckBox>
-
+                        <CheckBox count={count} setCount={setCount}>
+                            <img src="assets/img/check.png" />
                         </CheckBox>
                     </HabitSection>
                 ))}
@@ -65,6 +72,7 @@ const HabitSection = styled.div`
     background: #FFFFFF;
     border-radius: 5px;
     padding: 13px 15px 13px 15px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     p{
@@ -72,11 +80,3 @@ const HabitSection = styled.div`
         color: #666666;
     }
 `
-const CheckBox = styled.div`
-    width: 69px;
-    height: 69px;
-    background: #EBEBEB;
-    border-radius: 5px;
-    border: 1px solid #E7E7E7;
-`
-

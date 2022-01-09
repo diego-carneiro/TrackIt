@@ -37,6 +37,7 @@ export default function LoginPage({ setInfo, setToken }) {
             setInfo(response.data);
             setToken(response.data.token);
             storage("userImg", response.data.image);
+            storage("userToken", response.data.token);
         });
         promise.catch(error => {
             

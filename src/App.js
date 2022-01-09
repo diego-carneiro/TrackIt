@@ -13,10 +13,8 @@ import { useState } from "react";
 
 export default function App() {
 
-    const [token, setToken] = useState("");
+    const { token, setToken } = React.useContext(AuthContext);
 
-    const { user, setUser } = React.useContext(AuthContext);
-    
     const [info, setInfo] = useState("");
 
     return (

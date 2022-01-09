@@ -11,7 +11,7 @@ import PostedHabits from "../components/PostedHabits";
 import Footer from "../components/Footer";
 import { AuthContext } from "../providers/auth";
 
-export default function Habits({ token }) {
+export default function Habits() {
 
     const [isHidden, setIsHidden] = useState(true);
     const [habitInfo, setHabitInfo] = useState("");
@@ -20,6 +20,12 @@ export default function Habits({ token }) {
     const [showHabits, setShowHabits] = useState(false);
     const [info, setInfo] = useState([]);
     const [id, setId] = useState("");
+    const [token, setToken] = useState(() => {
+
+        const storedToken = localStorage.getItem("userToken");
+
+        return storedToken;
+    });
 
     const navigate = useNavigate();
 
