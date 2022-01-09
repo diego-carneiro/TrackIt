@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
     *{
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Lexend Deca', sans-serif;
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
         font-weight: normal;
         font-size: 70px;
         text-decoration: none;
+        
     }
 `
 

@@ -120,6 +120,7 @@ const HabitBox = styled.div`
     background-color: #FFFFFF;
     border-radius: 5px;
     padding: 18px 18px 15px 18px;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     align-items: space-between;

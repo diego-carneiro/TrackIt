@@ -17,9 +17,8 @@ export default function Habits({ token }) {
     const [habitInfo, setHabitInfo] = useState("");
     const [postTrigger, setPostTrigger] = useState(false);
     const [deleteTrigger, setDeleteTrigger] = useState(false);
-    const [hideText, setHideText] = useState(false);
-    const [showHabits, setShowHabits] = useState(true);
-    const [info, setInfo] = useState(null);
+    const [showHabits, setShowHabits] = useState(false);
+    const [info, setInfo] = useState([]);
     const [id, setId] = useState("");
 
     const navigate = useNavigate();
@@ -45,17 +44,16 @@ export default function Habits({ token }) {
         );
         promise.then(response => {
             console.log(response);
-            setInfo(response.data); 
-            
-            if(info !== null){
-                setHideText(true)
-            }
+            setInfo(response.data);
+
         });
         promise.catch(error => {
             alert(error);
         });
 
-       
+        if (info.length === 0) {
+            setShowHabits(true);
+        } 
 
     }, [postTrigger, deleteTrigger]);
 
@@ -88,7 +86,6 @@ export default function Habits({ token }) {
         );
         navigate("/habitos")
     }
-    console.log(deleteTrigger, "?");
 
     return (
         <>
@@ -102,10 +99,9 @@ export default function Habits({ token }) {
                         <p>+</p>
                     </PlusButton>
                 </TittleSection>
-                <NewHabit isHidden={isHidden} setIsHidden={setIsHidden} setHabitInfo={setHabitInfo} setPostTrigger={setPostTrigger}
-                />
-                    <PostedHabits token={token} info={info} showHabits={showHabits} setId={setId} setDeleteTrigger={setDeleteTrigger}/>
-                <InteractionBox display={hideText}>
+                <NewHabit isHidden={isHidden} setIsHidden={setIsHidden} setHabitInfo={setHabitInfo} setPostTrigger={setPostTrigger} />
+                <PostedHabits token={token} info={info} showHabits={showHabits} setId={setId} setDeleteTrigger={setDeleteTrigger} />
+                <InteractionBox display={info}>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 </InteractionBox>
             </Container>
@@ -149,10 +145,10 @@ const PlusButton = styled.div`
    }
 `
 const InteractionBox = styled.div`
-    margin-top: 30px;
+
     p{
         font-size: 18px;
         color: #666666;
     }
-    display: ${props => props.display ? "none" : "inherit"};
+    display: ${props => props.display.length !== 0  ? "none" : "inherit"};
 `

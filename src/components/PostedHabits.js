@@ -43,9 +43,7 @@ export default function PostedHabits({ info, showHabits, setDeleteTrigger, setId
                 {info.map((items) => (
                     <HabitBox display={showHabits}>
                         <TopBox>
-                            <HabitTitle>
-                                <p>{items.name}</p>
-                            </HabitTitle>
+                            <p>{items.name}</p> 
                             <TrashIcon onClick={() => {
                                 setDeleteTrigger(true);
                                 setId(items.id);
@@ -78,16 +76,11 @@ const HabitBox = styled.div`
     background-color: #FFFFFF;
     border-radius: 5px;
     padding: 11px 10px 15px 10px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     align-items: space-between;
     display: ${props => props.display ? "inherit" : "none"};
-`;
-const HabitTitle = styled.div`
-    p{
-        font-size: 20px;
-        color: #666666;
-    }
 `;
 const DaySection = styled.div`
     display: flex;
@@ -99,5 +92,10 @@ const TrashIcon = styled.img`
 const TopBox = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 10px;  
+    
+    p{
+        font-size: 20px;
+        color: #666666;
+    }
 `;

@@ -27,7 +27,7 @@ export default function App() {
                 <Route path="/cadastro" element={<Signup /> } />
                 <Route path="/habitos" element={<Habits token={token}/> } />
                 <Route path="/historico" element={<History/> } />
-                <Route path="/hoje" element={<CurrentDay/> } />
+                <Route path="/hoje" element={<CurrentDay token={token}/> } />
             </Routes>
         </BrowserRouter>
 
