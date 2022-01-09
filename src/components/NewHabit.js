@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useEffect } from "react/cjs/react.development";
 
-import DayIcon from "./DayIcon";
+import DayButton from "./DayButton";
 
 
 export default function NewHabit({ isHidden, setIsHidden, setHabitInfo, setPostTrigger }) {
@@ -94,9 +94,9 @@ export default function NewHabit({ isHidden, setIsHidden, setHabitInfo, setPostT
             <Input placeholder="  Nome do hábito" type="text" name="name" onChange= {(e) => setHabitName(e.target.value)}></Input>
             <DaySection>
                 {allDays.map((info) => (
-                    <DayIcon id={info.id} addDay={addDay} removeDay={removeDay}>
+                    <DayButton id={info.id} addDay={addDay} removeDay={removeDay}>
                         <p>{info.day}</p>
-                    </DayIcon>
+                    </DayButton>
                 ))}
             </DaySection>
             <CancelButton onClick={() => {

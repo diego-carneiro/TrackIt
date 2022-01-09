@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
-import axios from "axios";
 
 import DayIcon from "./DayIcon";
 
-export default function PostedHabits({ info, showHabits }) {
+export default function PostedHabits({ info, showHabits, setDeleteTrigger, setId }) {
 
+console.log(info, "teeste");
     const allDays = [
         {
             id: "7",
@@ -38,23 +37,39 @@ export default function PostedHabits({ info, showHabits }) {
             day: "S",
         },
     ];
-console.log(info);
+
+    if (info !== null) {
+
+        return (
+            <>
+                {info.map((items) => (
+                    <HabitBox display={showHabits}>
+                        <TopBox>
+                            <HabitTitle>
+                                <p>{items.name}</p>
+                            </HabitTitle>
+                            <TrashIcon onClick={() => {
+                                setDeleteTrigger(true);
+                                setId(items.id);
+                            }} 
+                            img src="assets/img/trash.png" />
+                        </TopBox>
+                        <DaySection>
+                            {allDays.map((items) => (
+                                <DayIcon>
+                                    <p>{items.day}</p>
+                                </DayIcon>
+                            ))}
+                        </DaySection>
+                    </HabitBox>
+                ))}
+            </>
+
+        );
+    };
+
     return (
         <>
-            <HabitBox display={showHabits}>
-                <HabitTitle>
-                    <p></p>
-                </HabitTitle>
-                <DaySection>
-                    {allDays.map((info) => (
-                        <DayIcon>
-                            <p>{info.day}</p>
-                        </DayIcon>
-                    ))}
-                </DaySection>
-
-
-            </HabitBox>
         </>
     );
 }
@@ -78,4 +93,13 @@ const HabitTitle = styled.div`
 `;
 const DaySection = styled.div`
     display: flex;
+`;
+const TrashIcon = styled.img`
+   width: 13px;
+   height: 15px;
+`;
+const TopBox = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
 `;

@@ -4,9 +4,16 @@ import { useState } from "react";
 
 export default function DayIcon(props) {
 
+    const [isSelected, setIsSelected] = useState(false);
+
+    const Toggle = () => {
+
+        isSelected ? setIsSelected(false) : setIsSelected(true);
+        isSelected ? props.removeDay(props.id) : props.addDay(props.id);
+    }
 
     return(
-        <DayButton >
+        <DayButton color={isSelected} onClick={Toggle}>
               <p>{props.children}</p>
         </DayButton>
     );
