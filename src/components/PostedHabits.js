@@ -1,12 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from "react";
 
 import DayIcon from "./DayIcon";
 
 export default function PostedHabits({ info, showHabits, setDeleteTrigger, setId }) {
 
-console.log(info, "teeste");
     const allDays = [
         {
             id: "7",

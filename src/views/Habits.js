@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import { useEffect } from "react/cjs/react.development";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import Header from "../components/Header";
@@ -15,21 +16,23 @@ export default function Habits({ token }) {
     const [isHidden, setIsHidden] = useState(true);
     const [habitInfo, setHabitInfo] = useState("");
     const [postTrigger, setPostTrigger] = useState(false);
-    // const [deleteTrigger, setDeleteTrigger] = useState(false);
+    const [deleteTrigger, setDeleteTrigger] = useState(false);
     const [hideText, setHideText] = useState(false);
     const [showHabits, setShowHabits] = useState(true);
     const [info, setInfo] = useState(null);
     const [id, setId] = useState("");
+
+    const navigate = useNavigate();
 
     if (postTrigger === true) {
         postHabit();
         setPostTrigger(false);
     }
 
-    // if (deleteTrigger === true) {
-    //     deleteHabit();
-    //     setDeleteTrigger(false);
-    // }
+    if (deleteTrigger === true) {
+        deleteHabit();
+        setDeleteTrigger(false);
+    }
 
     useEffect(() => {
 
@@ -54,7 +57,7 @@ export default function Habits({ token }) {
 
        
 
-    }, []);
+    }, [postTrigger, deleteTrigger]);
 
 
     function postHabit() {
@@ -67,22 +70,25 @@ export default function Habits({ token }) {
         );
         promise.then(response => {
             console.log(response);
+            navigate("/habitos")
         });
         promise.catch(error => {
             alert("Erro ao salvar novo hábito");
         });
     }
 
-    // function deleteHabit() {
-    //     const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
-    //         {
-    //             headers: {
-    //                 "Authorization": `Bearer ${token}`
-    //             }
-    //         }
+    function deleteHabit() {
+        const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
 
-    //     );
-    // }
+        );
+        navigate("/habitos")
+    }
+    console.log(deleteTrigger, "?");
 
     return (
         <>
@@ -98,7 +104,7 @@ export default function Habits({ token }) {
                 </TittleSection>
                 <NewHabit isHidden={isHidden} setIsHidden={setIsHidden} setHabitInfo={setHabitInfo} setPostTrigger={setPostTrigger}
                 />
-                <PostedHabits token={token} info={info} showHabits={showHabits} setId={setId} />
+                    <PostedHabits token={token} info={info} showHabits={showHabits} setId={setId} setDeleteTrigger={setDeleteTrigger}/>
                 <InteractionBox display={hideText}>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 </InteractionBox>
