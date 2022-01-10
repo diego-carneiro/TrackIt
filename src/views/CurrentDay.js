@@ -41,13 +41,16 @@ export default function MenuButton() {
     }, [progress, contador]);
 
     useEffect(() => {
-        
-        let count = 0;
 
-        for (let  element of info) {
-            if (element.done == true) count ++;
+        if (info !== null) {
+
+            let count = 0;
+
+            for (let element of info) {
+                if (element.done == true) count++;
+            }
+            setProgress(Math.ceil((count * 100) / total));
         }
-        setProgress(Math.ceil((count * 100) / total));
 
     }, [info, contador]);
 
