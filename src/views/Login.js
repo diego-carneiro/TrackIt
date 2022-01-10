@@ -3,12 +3,16 @@ import styled from "styled-components";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../providers/auth";
 import axios from "axios";
 
 import Logo from "../components/Logo";
 import Loading from "../components/Loading";
 
+
 export default function LoginPage({ setInfo, setToken }) {
+
+    const { user, setUser } = useAuth();
 
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +40,8 @@ export default function LoginPage({ setInfo, setToken }) {
             setIsLoading(false);
             setInfo(response.data);
             storage("userImg", response.data.image);
-            storage("userToken", response.data.token);
+            setUser(response.data);
+            storage("userToken", response.data.token)
         });
         promise.catch(error => {
             

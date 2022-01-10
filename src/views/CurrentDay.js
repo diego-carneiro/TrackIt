@@ -15,14 +15,13 @@ export default function MenuButton() {
     const [info, setInfo] = useState([]);
     const [total, setTotal] = useState(0);
     const [contador, setContador] = useState(0);
+    const { user, setUser } = useAuth();
+    const { progress, setProgress } = useAuth();
     const [token, setToken] = useState(() => {
 
         const storedToken = localStorage.getItem("userToken");
-
         return storedToken;
     });
-
-    const { progress, setProgress } = useAuth();
 
     useEffect(() => {
 
@@ -42,7 +41,7 @@ export default function MenuButton() {
 
     useEffect(() => {
 
-        if (info !== null) {
+        if (info.length !== 0) {
 
             let count = 0;
 

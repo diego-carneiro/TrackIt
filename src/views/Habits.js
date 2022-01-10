@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { useEffect } from "react/cjs/react.development";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../providers/auth";
 import axios from "axios";
 
 import Header from "../components/Header";
@@ -19,12 +20,7 @@ export default function Habits() {
     const [showHabits, setShowHabits] = useState(false);
     const [info, setInfo] = useState([]);
     const [id, setId] = useState("");
-    const [token, setToken] = useState(() => {
-
-        const storedToken = localStorage.getItem("userToken");
-
-        return storedToken;
-    });
+    const { user, setUser } = useAuth();
 
     const navigate = useNavigate();
 
@@ -43,7 +39,7 @@ export default function Habits() {
         const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
             {
                 headers: {
-                    "Authorization": `Bearer ${token}`
+                    "Authorization": `Bearer ${user.token}`
                 }
             }
         );
@@ -66,7 +62,7 @@ export default function Habits() {
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", habitInfo,
             {
                 headers: {
-                    "Authorization": `Bearer ${token}`
+                    "Authorization": `Bearer ${user.token}`
                 }
             }
         );
@@ -93,7 +89,7 @@ export default function Habits() {
         const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
             {
                 headers: {
-                    "Authorization": `Bearer ${token}`
+                    "Authorization": `Bearer ${user.token}`
                 }
             }
 
@@ -116,7 +112,7 @@ export default function Habits() {
                     </PlusButton>
                 </TittleSection>
                 <NewHabit isHidden={isHidden} setIsHidden={setIsHidden} setHabitInfo={setHabitInfo} setPostTrigger={setPostTrigger} />
-                <PostedHabits token={token} info={info} showHabits={showHabits} setId={setId} setDeleteTrigger={setDeleteTrigger} />
+                <PostedHabits info={info} showHabits={showHabits} setId={setId} setDeleteTrigger={setDeleteTrigger} />
                 <InteractionBox display={info}>
                     <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
                 </InteractionBox>

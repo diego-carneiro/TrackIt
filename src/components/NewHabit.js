@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useState, useEffect  } from "react";
+import { useState, useEffect } from "react";
 
 import DayButton from "./DayButton";
 
@@ -90,28 +90,32 @@ export default function NewHabit({ isHidden, setIsHidden, setHabitInfo, setPostT
     return (
 
         <HabitBox display={isHidden} >
-            <Input placeholder="  Nome do hábito" type="text" name="name" value={habitName} onChange= {(e) => setHabitName(e.target.value)}></Input>
-            <DaySection>
-                {allDays.map((info) => (
-                    <DayButton id={info.id} addDay={addDay} removeDay={removeDay} key={info.id} inputReset={inputReset} setInputReset={setInputReset}>
-                        <p>{info.day}</p>
-                    </DayButton>
-                ))}
-            </DaySection>
-            <CancelButton onClick={() => {
-                setIsHidden(true);
-            }}>
-                <p>Cancelar</p>
-            </CancelButton>
-            <SaveButton onClick={() => {
-                setPostTrigger(true) 
-                setHabitName(initialValue);
-                setIsHidden(true)
-                setHabitName(initialValue);
-                setInputReset(true);
-            }}>
-                <p>Salvar</p>
-            </SaveButton>
+            <TopContainer>
+                <Input placeholder="  Nome do hábito" type="text" name="name" value={habitName} onChange={(e) => setHabitName(e.target.value)}></Input>
+                <DaySection>
+                    {allDays.map((info) => (
+                        <DayButton id={info.id} addDay={addDay} removeDay={removeDay} key={info.id} inputReset={inputReset} setInputReset={setInputReset}>
+                            <p>{info.day}</p>
+                        </DayButton>
+                    ))}
+                </DaySection>
+            </TopContainer>
+            <BotContainer>
+                <CancelButton onClick={() => {
+                    setIsHidden(true);
+                }}>
+                    <p>Cancelar</p>
+                </CancelButton>
+                <SaveButton onClick={() => {
+                    setPostTrigger(true)
+                    setHabitName(initialValue);
+                    setIsHidden(true)
+                    setHabitName(initialValue);
+                    setInputReset(true);
+                }}>
+                    <p>Salvar</p>
+                </SaveButton>
+            </BotContainer>
         </HabitBox>
     );
 }
@@ -125,7 +129,7 @@ const HabitBox = styled.div`
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
-    align-items: space-between;
+    justify-content: space-between;
     display: ${props => props.display ? "none" : "inherit"};
     & ::placeholder{
         color: #DBDBDB;
@@ -168,4 +172,13 @@ const SaveButton = styled.div`
         font-size: 16px;
         color: #FFFFFF;
     }
+`
+const TopContainer = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+`
+const BotContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
 `
