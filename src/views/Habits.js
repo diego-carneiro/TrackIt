@@ -9,7 +9,6 @@ import Header from "../components/Header";
 import NewHabit from "../components/NewHabit";
 import PostedHabits from "../components/PostedHabits";
 import Footer from "../components/Footer";
-import { AuthContext } from "../providers/auth";
 
 export default function Habits() {
 
@@ -78,9 +77,19 @@ export default function Habits() {
         promise.catch(error => {
             alert("Erro ao salvar novo hábito");
         });
-    }
+    }   
+
+    
 
     function deleteHabit() {
+
+        // eslint-disable-next-line no-restricted-globals
+        let question = confirm("Deseja mesmo excluir o hábito?");
+        
+        if (question === false){
+            return
+        }
+        
         const promise = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}`,
             {
                 headers: {
@@ -89,7 +98,9 @@ export default function Habits() {
             }
 
         );
-        navigate("/habitos")
+        promise.then(() => {
+            navigate("/habitos")  
+        })
     }
 
     return (

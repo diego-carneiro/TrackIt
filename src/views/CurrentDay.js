@@ -13,9 +13,8 @@ import Footer from "../components/Footer";
 export default function MenuButton() {
 
     const [info, setInfo] = useState([]);
-    const [count, setCount] = useState(0);
     const [total, setTotal] = useState(0);
-    const [id, setId] = useState("");
+    const [contador, setContador] = useState(0);
     const [token, setToken] = useState(() => {
 
         const storedToken = localStorage.getItem("userToken");
@@ -35,22 +34,26 @@ export default function MenuButton() {
             }
         );
         promise.then(response => {
-            console.log(response.data);
             setInfo(response.data);
             setTotal(response.data.length);
         });
 
-    }, []);
+    }, [progress, contador]);
 
     useEffect(() => {
+        
+        let count = 0;
 
-        const percent = Math.ceil((count * 100) / total);
-        setProgress(percent);
+        for (let  element of info) {
+            if (element.done == true) count ++;
+        }
+        setProgress(Math.ceil((count * 100) / total));
 
-    }, [count]);
+    }, [info, contador]);
 
-    function checkHabit() {
-        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,{},
+    function checkHabit(id) {
+
+        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`, {},
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -63,8 +66,8 @@ export default function MenuButton() {
         promise.catch(error => alert(error));
     }
 
-    function uncheckHabit() {
-        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,{},
+    function uncheckHabit(id) {
+        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`, {},
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -72,11 +75,10 @@ export default function MenuButton() {
             }
         );
         promise.then(response => {
-            console.log(response.data);
         });
         promise.catch(error => alert(error));
     }
-   console.log(id)
+
     return (
         <>
             <Header />
@@ -84,9 +86,11 @@ export default function MenuButton() {
                 <WeekdayDate />
                 {info.map((items) => {
                     return (
-                        <HabitSection key={items.id}>
+                        <HabitSection key={items.id} onClick={() => {
+                            setContador(contador + 1);
+                        }}>
                             <p>{items.name}</p>
-                            <CheckBox count={count} setCount={setCount} setId={setId} id={items.id} checkHabit={checkHabit} uncheckHabit={uncheckHabit} info={info}>
+                            <CheckBox id={items.id} checkHabit={checkHabit} uncheckHabit={uncheckHabit} info={items.done} contador={contador} setContador={setContador}>
                                 <img src="assets/img/check.png" />
                             </CheckBox>
                         </HabitSection>

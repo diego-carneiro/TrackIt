@@ -2,23 +2,22 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 
-export default function CheckBox({ children, count, setCount, id, setId, checkHabit, uncheckHabit, info }) {
+export default function CheckBox({ children, id, checkHabit, uncheckHabit, info, contador, setContador }) {
 
     const [isChecked, setIsChecked] = useState(false);
 
     function toggle() {
 
         isChecked ? setIsChecked(false) : setIsChecked(true);
-        isChecked ? setCount(count - 1) : setCount(count + 1);
+        isChecked ? setContador(contador - 1) : setContador(contador + 1);
     }
 
-    if (isChecked === true) {
+    if (info === true) {
 
         return (
-            <CheckIcon color={info.done} onClick={() => {
+            <CheckIcon color={info} onClick={() => {
                 toggle();
-                setId(id);
-                uncheckHabit();
+                uncheckHabit(id);
             }}>
                 {children}
             </CheckIcon>
@@ -26,10 +25,9 @@ export default function CheckBox({ children, count, setCount, id, setId, checkHa
     }
 
     return (
-        <CheckIcon color={info.done} onClick={() => {
+        <CheckIcon color={info} onClick={() => {
             toggle();
-            setId(id);
-            checkHabit();
+            checkHabit(id);
         }}>
             {children}
         </CheckIcon>

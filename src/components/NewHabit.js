@@ -100,8 +100,6 @@ export default function NewHabit({ isHidden, setIsHidden, setHabitInfo, setPostT
             </DaySection>
             <CancelButton onClick={() => {
                 setIsHidden(true);
-                setHabitName(initialValue);
-                setInputReset(true);
             }}>
                 <p>Cancelar</p>
             </CancelButton>
