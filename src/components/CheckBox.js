@@ -2,20 +2,34 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 
-export default function CheckBox({ children, count, setCount, Calc }) {
+export default function CheckBox({ children, count, setCount, id, setId, checkHabit, uncheckHabit, info }) {
 
     const [isChecked, setIsChecked] = useState(false);
 
-    function toggle () {
+    function toggle() {
 
         isChecked ? setIsChecked(false) : setIsChecked(true);
         isChecked ? setCount(count - 1) : setCount(count + 1);
-        
     }
 
-    return(
-        <CheckIcon color={isChecked} onClick={() => {
-            toggle() 
+    if (isChecked === true) {
+
+        return (
+            <CheckIcon color={info.done} onClick={() => {
+                toggle();
+                setId(id);
+                uncheckHabit();
+            }}>
+                {children}
+            </CheckIcon>
+        );
+    }
+
+    return (
+        <CheckIcon color={info.done} onClick={() => {
+            toggle();
+            setId(id);
+            checkHabit();
         }}>
             {children}
         </CheckIcon>

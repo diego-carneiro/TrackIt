@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
+import { useEffect } from "react/cjs/react.development";
 
 export default function DayIcon({ children, addDay, removeDay, id, inputReset, setInputReset }) {
 
@@ -10,12 +11,17 @@ export default function DayIcon({ children, addDay, removeDay, id, inputReset, s
 
         isSelected ? setIsSelected(false) : setIsSelected(true);
         isSelected ? removeDay(id) : addDay(id);
+       
+    }
+
+    useEffect(() => {
 
         if (inputReset === true) {
             setIsSelected(false)
             setInputReset(false);
         }
-    }
+ console.log(inputReset);
+    }, [inputReset])
 
     return (
         <DayButton color={isSelected} onClick={Toggle}>

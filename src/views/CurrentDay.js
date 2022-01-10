@@ -15,6 +15,7 @@ export default function MenuButton() {
     const [info, setInfo] = useState([]);
     const [count, setCount] = useState(0);
     const [total, setTotal] = useState(0);
+    const [id, setId] = useState("");
     const [token, setToken] = useState(() => {
 
         const storedToken = localStorage.getItem("userToken");
@@ -26,7 +27,7 @@ export default function MenuButton() {
 
     useEffect(() => {
 
-        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits",
+        const promise = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today",
             {
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -34,35 +35,63 @@ export default function MenuButton() {
             }
         );
         promise.then(response => {
+            console.log(response.data);
             setInfo(response.data);
             setTotal(response.data.length);
         });
 
     }, []);
 
-    console.log(count, "count");
-    console.log(progress);
-    
     useEffect(() => {
-        
-        const percent = Math.ceil((count * 100) / total) ;
+
+        const percent = Math.ceil((count * 100) / total);
         setProgress(percent);
 
     }, [count]);
 
+    function checkHabit() {
+        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/check`,{},
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+        promise.then(response => {
+            console.log(response.data);
+        });
+        promise.catch(error => alert(error));
+    }
+
+    function uncheckHabit() {
+        const promise = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${id}/uncheck`,{},
+            {
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+        promise.then(response => {
+            console.log(response.data);
+        });
+        promise.catch(error => alert(error));
+    }
+   console.log(id)
     return (
         <>
             <Header />
             <Container>
                 <WeekdayDate />
-                {info.map((items) => (
-                    <HabitSection key={items.id}>
-                        <p>{items.name}</p>
-                        <CheckBox count={count} setCount={setCount} >
-                            <img src="assets/img/check.png" />
-                        </CheckBox>
-                    </HabitSection>
-                ))}
+                {info.map((items) => {
+                    return (
+                        <HabitSection key={items.id}>
+                            <p>{items.name}</p>
+                            <CheckBox count={count} setCount={setCount} setId={setId} id={items.id} checkHabit={checkHabit} uncheckHabit={uncheckHabit} info={info}>
+                                <img src="assets/img/check.png" />
+                            </CheckBox>
+                        </HabitSection>
+                    )
+                })}
             </Container>
             <Footer />
         </>

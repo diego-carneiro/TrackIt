@@ -7,55 +7,57 @@ export default function PostedHabits({ info, showHabits, setDeleteTrigger, setId
 
     const allDays = [
         {
-            id: "7",
+            id: 7,
             day: "D",
         },
         {
-            id: "1",
+            id: 1,
             day: "S",
         },
         {
-            id: "2",
+            id: 2,
             day: "T",
         },
         {
-            id: "3",
+            id: 3,
             day: "Q",
         },
         {
-            id: "4",
+            id: 4,
             day: "Q",
         },
         {
-            id: "5",
+            id: 5,
             day: "S",
         },
         {
-            id: "6",
+            id: 6,
             day: "S",
         },
     ];
 
     if (info !== null) {
-
         return (
             <>
                 {info.map((items) => (
                     <HabitBox display={showHabits}>
                         <TopBox>
-                            <p>{items.name}</p> 
+                            <p>{items.name}</p>
                             <TrashIcon onClick={() => {
                                 setDeleteTrigger(true);
                                 setId(items.id);
-                            }} 
-                            img src="assets/img/trash.png" />
+                            }}
+                                img src="assets/img/trash.png" />
                         </TopBox>
                         <DaySection>
-                            {allDays.map((items) => (
-                                <DayIcon>
-                                    <p>{items.day}</p>
-                                </DayIcon>
-                            ))}
+                            {allDays.map((data) => {
+
+                                return (
+                                    <DayIcon isSelected={items.days.includes(data.id)}>
+                                        <p>{data.day}</p>
+                                    </DayIcon>
+                                )
+                            })}
                         </DaySection>
                     </HabitBox>
                 ))}

@@ -1,13 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from "react";
 
-export default function DayIcon(props) {
-
+export default function DayIcon({ children, isSelected }) {
 
     return(
-        <DayButton >
-              <p>{props.children}</p>
+        <DayButton color={isSelected}>
+              <p>{children}</p>
         </DayButton>
     );
 }
