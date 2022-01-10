@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
+import { useAuth } from "../providers/auth";
 
 import MenuButton from "./MenuButton";
 
 export default function Footer() {
 
-    const percentage = 20;
+    const { progress, setProgress } = useAuth();
 
     return (
         <BotBar>
@@ -18,7 +19,7 @@ export default function Footer() {
             <Link to="/hoje">
                 <CircularContainer>
                     <CircularProgressbar
-                        value={percentage}
+                        value={progress}
                         text={"Hoje"}
                         background
                         backgroundPadding={6}

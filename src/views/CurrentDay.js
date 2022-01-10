@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
+import { useState, useEffect } from "react";
+import { useAuth } from "../providers/auth";
+
 import axios from "axios";
 
 import Header from "../components/Header";
@@ -13,12 +14,15 @@ export default function MenuButton() {
 
     const [info, setInfo] = useState([]);
     const [count, setCount] = useState(0);
+    const [total, setTotal] = useState(0);
     const [token, setToken] = useState(() => {
 
         const storedToken = localStorage.getItem("userToken");
 
         return storedToken;
     });
+
+    const { progress, setProgress } = useAuth();
 
     useEffect(() => {
 
@@ -31,11 +35,20 @@ export default function MenuButton() {
         );
         promise.then(response => {
             setInfo(response.data);
+            setTotal(response.data.length);
         });
 
     }, []);
 
-    console.log(count);
+    console.log(count, "count");
+    console.log(progress);
+    
+    useEffect(() => {
+        
+        const percent = Math.ceil((count * 100) / total) ;
+        setProgress(percent);
+
+    }, [count]);
 
     return (
         <>
@@ -43,9 +56,9 @@ export default function MenuButton() {
             <Container>
                 <WeekdayDate />
                 {info.map((items) => (
-                    <HabitSection>
+                    <HabitSection key={items.id}>
                         <p>{items.name}</p>
-                        <CheckBox count={count} setCount={setCount}>
+                        <CheckBox count={count} setCount={setCount} >
                             <img src="assets/img/check.png" />
                         </CheckBox>
                     </HabitSection>

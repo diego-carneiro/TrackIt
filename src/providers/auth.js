@@ -1,15 +1,22 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext, createContext } from "react";
 
-export const AuthContext = React.createContext({})
+const AuthContext = createContext()
 
-export const AuthProvider = ({ children }) => {
+export default function AuthProvider ({ children }) {
 
-    const [token, setToken] = useState("");
+    const [progress, setProgress] = useState(0);
 
     return (
-       <AuthContext.Provider value = {{token, setToken}}>
+       <AuthContext.Provider value = {{progress, setProgress}}>
            {children}
        </AuthContext.Provider>
     )
+}
+
+export const useAuth = () => {
+    
+    const { progress, setProgress } = useContext(AuthContext);
+
+    return { progress, setProgress } ;
 }

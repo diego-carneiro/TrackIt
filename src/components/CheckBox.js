@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 
-export default function CheckBox({ children, count, setCount }) {
+export default function CheckBox({ children, count, setCount, Calc }) {
 
     const [isChecked, setIsChecked] = useState(false);
 
@@ -10,18 +10,19 @@ export default function CheckBox({ children, count, setCount }) {
 
         isChecked ? setIsChecked(false) : setIsChecked(true);
         isChecked ? setCount(count - 1) : setCount(count + 1);
+        
     }
 
     return(
         <CheckIcon color={isChecked} onClick={() => {
-            toggle();
+            toggle() 
         }}>
             {children}
         </CheckIcon>
     );
 }
 // ::::::::::Styled-Components::::::::::
-const CheckIcon = styled.div`
+const CheckIcon = styled.button`
     width: 69px;
     height: 69px;
     background: ${props => props.color ? "#8FC549" : "#EBEBEB"};

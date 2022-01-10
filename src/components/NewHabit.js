@@ -1,18 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { useState } from "react";
-import { useEffect } from "react/cjs/react.development";
+import { useState, useEffect  } from "react";
 
 import DayButton from "./DayButton";
 
 
 export default function NewHabit({ isHidden, setIsHidden, setHabitInfo, setPostTrigger }) {
 
-    const initialValue = {
-        name: "",
-    }
+    const initialValue = "";
 
     const [habitName, setHabitName] = useState(initialValue);
+    const [inputReset, setInputReset] = useState(false);
+    console.log(inputReset);
 
     const allDays = [
         {
@@ -91,22 +90,27 @@ export default function NewHabit({ isHidden, setIsHidden, setHabitInfo, setPostT
     return (
 
         <HabitBox display={isHidden} >
-            <Input placeholder="  Nome do hábito" type="text" name="name" onChange= {(e) => setHabitName(e.target.value)}></Input>
+            <Input placeholder="  Nome do hábito" type="text" name="name" value={habitName} onChange= {(e) => setHabitName(e.target.value)}></Input>
             <DaySection>
                 {allDays.map((info) => (
-                    <DayButton id={info.id} addDay={addDay} removeDay={removeDay}>
+                    <DayButton id={info.id} addDay={addDay} removeDay={removeDay} key={info.id} inputReset={inputReset} setInputReset={setInputReset}>
                         <p>{info.day}</p>
                     </DayButton>
                 ))}
             </DaySection>
             <CancelButton onClick={() => {
                 setIsHidden(true);
+                setHabitName(initialValue);
+                setInputReset(true);
             }}>
                 <p>Cancelar</p>
             </CancelButton>
             <SaveButton onClick={() => {
-                setPostTrigger(true)
-                setIsHidden(true);
+                setPostTrigger(true) 
+                setHabitName(initialValue);
+                setIsHidden(true)
+                setHabitName(initialValue);
+                setInputReset(true);
             }}>
                 <p>Salvar</p>
             </SaveButton>

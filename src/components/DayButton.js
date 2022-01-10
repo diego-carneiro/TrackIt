@@ -2,19 +2,24 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 
-export default function DayIcon(props) {
+export default function DayIcon({ children, addDay, removeDay, id, inputReset, setInputReset }) {
 
     const [isSelected, setIsSelected] = useState(false);
 
     const Toggle = () => {
 
         isSelected ? setIsSelected(false) : setIsSelected(true);
-        isSelected ? props.removeDay(props.id) : props.addDay(props.id);
+        isSelected ? removeDay(id) : addDay(id);
+
+        if (inputReset === true) {
+            setIsSelected(false)
+            setInputReset(false);
+        }
     }
 
-    return(
+    return (
         <DayButton color={isSelected} onClick={Toggle}>
-              <p>{props.children}</p>
+            <p>{children}</p>
         </DayButton>
     );
 }
@@ -32,6 +37,6 @@ const DayButton = styled.div`
 
     p{
         font-size: 20px;
-        color: ${props => props.color ? "#FFFFFF" : "#DBDBDB" }
+        color: ${props => props.color ? "#FFFFFF" : "#DBDBDB"}
     }
 `;

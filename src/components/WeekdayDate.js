@@ -1,14 +1,30 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br"
+import { useAuth } from "../providers/auth";
 
 export default function WeekdayDate() {
 
-    const dayjs = require("dayjs")
+    const { progress, setProgress } = useAuth();
+
+    if (progress > 0){
+        
+        return (
+            <>
+                <WeekdaySection color={progress}>
+                    <h1>{dayjs().locale("pt-br").format('dddd')}, {dayjs().format('DD/MM')}</h1>
+                    <p>{progress}% dos hábitos concluídos</p>
+                </WeekdaySection>
+    
+            </>
+        );
+    }
 
     return (
         <>
-            <WeekdaySection>
-                <h1>{dayjs().format('dddd')}, {dayjs().format('DD/MM')}</h1>
+            <WeekdaySection color={progress}>
+                <h1>{dayjs().locale("pt-br").format('dddd')}, {dayjs().format('DD/MM')}</h1>
                 <p>Nenhum hábito concluído ainda</p>
             </WeekdaySection>
 
@@ -25,6 +41,6 @@ const WeekdaySection = styled.div`
     }
     p{
         font-size: 18px;
-        color: #BABABA;
+        color: ${props => props.color > 0 ? "#8FC549" : "#BABABA" };
     }
 `

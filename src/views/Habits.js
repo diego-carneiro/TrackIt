@@ -49,7 +49,6 @@ export default function Habits() {
             }
         );
         promise.then(response => {
-            console.log(response);
             setInfo(response.data);
 
         });

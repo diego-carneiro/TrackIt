@@ -8,12 +8,9 @@ import CurrentDay from"./views/CurrentDay";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import GlobalStyle from "./styles/GlobalStyle";
-import { AuthContext } from "./providers/auth";
 import { useState } from "react";
 
 export default function App() {
-
-    const { token, setToken } = React.useContext(AuthContext);
 
     const [info, setInfo] = useState("");
 
@@ -21,11 +18,11 @@ export default function App() {
         <BrowserRouter>   
             <GlobalStyle />
             <Routes>
-                <Route path="/" element={<Login setInfo={setInfo} setToken={setToken} />} />
+                <Route path="/" element={<Login setInfo={setInfo}/>} />
                 <Route path="/cadastro" element={<Signup /> } />
-                <Route path="/habitos" element={<Habits token={token}/> } />
+                <Route path="/habitos" element={<Habits/> } />
                 <Route path="/historico" element={<History/> } />
-                <Route path="/hoje" element={<CurrentDay token={token}/> } />
+                <Route path="/hoje" element={<CurrentDay/> } />
             </Routes>
         </BrowserRouter>
 
