@@ -1,9 +1,3 @@
-[Personal Project] - This is a mobile app built with React. It focus is assisting the user with daily tasks. First, you create your daily and weekly habits, and then you can manage your progress.
-
-
-
-
-
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
